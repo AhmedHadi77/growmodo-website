@@ -1,0 +1,11 @@
+{
+  "name": "@growmodo/ai",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@google/generative-ai": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

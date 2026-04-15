@@ -1,0 +1,46 @@
+import type { Metadata } from "next";
+import { Inter, Outfit } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { AIAssistant } from "@/components/chat/ai-assistant";
+import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Elevate | Premium AI Automation & Digital Agency",
+  description: "A world-class digital agency and AI automation platform building the future of web and software development.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${inter.variable} ${outfit.variable} antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-primary selection:text-primary-foreground">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <AIAssistant />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

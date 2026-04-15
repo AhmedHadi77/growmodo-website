@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  transpilePackages: ["@growmodo/db", "@growmodo/ui"],
+  output: "standalone",
 };
 
 export default nextConfig;
