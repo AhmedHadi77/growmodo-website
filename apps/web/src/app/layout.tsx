@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AIAssistant } from "@/components/chat/ai-assistant";
+import { PrivacySettings } from "@/components/layout/privacy-settings";
 import "./globals.css";
 
 const inter = Inter({
@@ -39,6 +40,7 @@ export default function RootLayout({
         >
           {children}
           <AIAssistant />
+          <PrivacySettings />
         </ThemeProvider>
       </body>
     </html>

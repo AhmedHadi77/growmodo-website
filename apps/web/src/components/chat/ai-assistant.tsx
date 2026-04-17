@@ -3,6 +3,7 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MessageCircle, X, Send, Bot, User } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 
 type Message = { role: "user" | "assistant"; content: string }
 
@@ -20,6 +21,17 @@ export function AIAssistant() {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight
         }
     }, [messages])
+
+    React.useEffect(() => {
+        const handleOpenChat = (e: CustomEvent<string>) => {
+            setIsOpen(true)
+            if (e.detail) {
+                setInput(e.detail)
+            }
+        }
+        window.addEventListener('open-ai-chat' as any, handleOpenChat as any)
+        return () => window.removeEventListener('open-ai-chat' as any, handleOpenChat as any)
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -60,7 +72,7 @@ export function AIAssistant() {
                     >
                         <div className="bg-primary px-4 py-4 flex items-center justify-between text-primary-foreground">
                             <div className="flex items-center gap-2 font-heading font-bold">
-                                <Bot className="w-5 h-5" /> Elevate Consultant
+                                <Bot className="w-5 h-5" /> Elevate Agent <Badge className="bg-white/20 text-[10px] px-1.5 py-0 h-4 border-none hover:bg-white/30">REAL TIME</Badge>
                             </div>
                             <button onClick={() => setIsOpen(false)} className="hover:bg-black/10 rounded-full p-1 transition-colors">
                                 <X className="w-5 h-5" />

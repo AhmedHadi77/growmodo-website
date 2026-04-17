@@ -1,10 +1,13 @@
 "use client"
+
 import * as React from "react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Briefcase, MapPin, Clock } from "lucide-react"
+import { ArrowRight, Briefcase, MapPin, Clock, Globe, Star, Sparkles, Send } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 
 const jobs = [
     {
@@ -13,7 +16,8 @@ const jobs = [
         department: "Engineering",
         location: "Remote (Global)",
         type: "Full-time",
-        description: "Join our elite team to build cutting-edge AI workflows using LLMs, LangChain, and vector databases."
+        salary: "$120k - $180k",
+        description: "Join our elite team to build cutting-edge AI workflows using LLMs, LangChain, and vector databases. You will report directly to Ahmed Hadi's strategy team."
     },
     {
         title: "Senior Product Designer",
@@ -21,7 +25,8 @@ const jobs = [
         department: "Design",
         location: "Remote (Global)",
         type: "Full-time",
-        description: "Lead the design of next-generation SaaS dashboards and AI interfaces for high-growth scale-ups."
+        salary: "$110k - $160k",
+        description: "Lead the design of next-generation SaaS dashboards and AI interfaces for high-growth scale-ups in the Elevate network."
     },
     {
         title: "Senior Fullstack Developer (Next.js)",
@@ -29,139 +34,122 @@ const jobs = [
         department: "Engineering",
         location: "Remote (Global)",
         type: "Full-time",
-        description: "Build scalable, performant web applications using the latest Next.js features and TypeScript."
-    },
-    {
-        title: "AI Product Manager",
-        slug: "ai-product-manager",
-        department: "Product",
-        location: "Remote (Global)",
-        type: "Full-time",
-        description: "Bridge the gap between complex AI capabilities and intuitive user experiences."
+        salary: "$130k - $190k",
+        description: "Build scalable, performant web applications using the latest Next.js features and TypeScript. Excellence is our only standard."
     }
 ]
 
 export default function CareersPage() {
+    const [selectedJob, setSelectedJob] = React.useState<string | null>(null)
+
     return (
-        <main className="flex min-h-screen flex-col bg-background pt-32 pb-20">
+        <main className="flex min-h-screen flex-col bg-white">
             <Header />
             
-            <div className="max-w-7xl mx-auto w-full px-6">
+            <div className="flex-1 pt-32 pb-20">
+                
                 {/* Hero */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-center mb-24 max-w-3xl mx-auto"
-                >
-                    <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-4 block">Careers at Elevate</span>
-                    <h1 className="text-5xl md:text-7xl font-heading font-extrabold tracking-tight mb-8">
-                        Join the Top 1% of Global Talent
-                    </h1>
-                    <p className="text-xl text-muted-foreground leading-relaxed">
-                        We're looking for the builders, the designers, and the visionaries who want to shape the future of AI-empowered development. 
-                    </p>
-                </motion.div>
-
-                {/* Job Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-                    {jobs.map((job, index) => (
-                        <motion.div
-                            key={job.slug}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="group"
-                        >
-                            <Link href={`/careers/${job.slug}`} className="block h-full">
-                                <div className="bg-card hover:bg-accent/5 transition-all duration-300 p-8 rounded-[2rem] border border-border/50 shadow-sm hover:shadow-xl hover:border-primary/20 flex flex-col h-full">
-                                    <div className="flex justify-between items-start mb-6">
-                                        <div className="bg-primary/10 text-primary px-4 py-1 rounded-full text-xs font-bold tracking-wider uppercase">
-                                            {job.department}
-                                        </div>
-                                        <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                                            <ArrowRight className="w-6 h-6 transform group-hover:translate-x-2 transition-transform" />
-                                        </div>
-                                    </div>
-                                    
-                                    <h3 className="text-2xl font-bold font-heading mb-4 group-hover:text-primary transition-colors">
-                                        {job.title}
-                                    </h3>
-                                    
-                                    <p className="text-muted-foreground leading-relaxed mb-8 flex-grow cursor-default">
-                                        {job.description}
-                                    </p>
-                                    
-                                    <div className="flex flex-wrap gap-6 text-sm text-muted-foreground border-t border-border/50 pt-6">
-                                        <span className="flex items-center gap-2">
-                                            <MapPin className="w-4 h-4" /> {job.location}
-                                        </span>
-                                        <span className="flex items-center gap-2">
-                                            <Clock className="w-4 h-4" /> {job.type}
-                                        </span>
-                                    </div>
-                                </div>
-                            </Link>
-                        </motion.div>
-                    ))}
+                <div className="max-w-7xl mx-auto px-6 mb-24">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-center max-w-3xl mx-auto space-y-6"
+                    >
+                        <Badge variant="secondary" className="bg-primary/10 text-primary px-4 py-1">Top 1% Global Network</Badge>
+                        <h1 className="text-5xl md:text-7xl font-heading font-extrabold tracking-tight text-foreground">
+                            Build the Future <br /> with Ahmed Hadi
+                        </h1>
+                        <p className="text-xl text-muted-foreground leading-relaxed italic">
+                            "We don't hire employees. We onboard partners who are obsessed with excellence."
+                        </p>
+                    </motion.div>
                 </div>
 
-                {/* Culture Section */}
-                <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="bg-primary/5 rounded-[3rem] p-12 md:p-20 text-center border border-primary/10"
-                >
-                    <h2 className="text-4xl font-heading font-bold mb-8">Why work with Elevate?</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-                        <div className="space-y-4">
-                            <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground">
-                                <Briefcase className="w-6 h-6" />
+                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-16">
+                    
+                    {/* Job Listings */}
+                    <div className="lg:col-span-2 space-y-8">
+                        <div className="flex justify-between items-center mb-8">
+                            <h2 className="text-3xl font-heading font-bold">Open Positions</h2>
+                            <div className="flex gap-2">
+                                <Badge variant="outline">Engineering (2)</Badge>
+                                <Badge variant="outline">Design (1)</Badge>
                             </div>
-                            <h4 className="text-xl font-bold">100% Remote</h4>
-                            <p className="text-muted-foreground">Work from anywhere in the world. We focus on results, not hours in a chair.</p>
                         </div>
-                        <div className="space-y-4">
-                            <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground">
-                                <Clock className="w-6 h-6" />
-                            </div>
-                            <h4 className="text-xl font-bold">Flexible Flow</h4>
-                            <p className="text-muted-foreground">Pick your own hours. We respect your circadian rhythm and personal life.</p>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground">
-                                <CheckCircle2 className="w-6 h-6" />
-                            </div>
-                            <h4 className="text-xl font-bold">Elite Projects</h4>
-                            <p className="text-muted-foreground">Scale top-tier SaaS companies and agencies with high-impact AI solutions.</p>
+
+                        <div className="space-y-6">
+                            {jobs.map((job, idx) => (
+                                <motion.div 
+                                    key={job.slug}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    onClick={() => setSelectedJob(job.title)}
+                                    className={`p-8 rounded-[2.5rem] border border-border shadow-sm hover:shadow-xl transition-all cursor-pointer group bg-white ${selectedJob === job.title ? 'ring-2 ring-primary border-transparent' : ''}`}
+                                >
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="space-y-1">
+                                            <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">{job.title}</h3>
+                                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                                <span className="flex items-center gap-1 font-semibold"><Globe size={14} /> {job.location}</span>
+                                                <span className="flex items-center gap-1 font-semibold text-primary"><Star size={14} /> {job.salary}</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                                            <ArrowRight size={20} />
+                                        </div>
+                                    </div>
+                                    <p className="text-muted-foreground leading-relaxed">{job.description}</p>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
-                </motion.div>
 
+                    {/* Application / Info Sidebar */}
+                    <div className="space-y-8">
+                        <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-border shadow-inner">
+                            <h4 className="text-2xl font-heading font-bold mb-6 flex items-center gap-2">
+                                <Sparkles className="text-primary" /> Application
+                            </h4>
+                            {selectedJob ? (
+                                <form className="space-y-4">
+                                    <div className="p-4 bg-white rounded-2xl border border-primary/20 text-sm font-bold flex justify-between items-center">
+                                        {selectedJob} <button onClick={() => setSelectedJob(null)} className="text-xs text-muted-foreground hover:text-destructive">Remove</button>
+                                    </div>
+                                    <input type="text" placeholder="Full Name" className="w-full p-4 rounded-xl border border-border focus:outline-none focus:border-primary transition-all" />
+                                    <input type="email" placeholder="Email Address" className="w-full p-4 rounded-xl border border-border focus:outline-none focus:border-primary transition-all" />
+                                    <div className="p-4 border-2 border-dashed border-border rounded-xl text-center text-xs font-bold text-muted-foreground cursor-pointer hover:border-primary transition-all">
+                                        Drop your technical CV / Portfolio here
+                                    </div>
+                                    <Button className="w-full py-6 font-bold gap-2">
+                                        Submit Application <Send size={18} />
+                                    </Button>
+                                </form>
+                            ) : (
+                                <div className="text-center py-12 space-y-4">
+                                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm">
+                                        <Briefcase className="text-muted-foreground" />
+                                    </div>
+                                    <p className="text-sm text-muted-foreground font-semibold px-4">Select a position to begin your Top 1% assessment.</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="p-8 space-y-4">
+                            <h5 className="font-bold text-lg">Employee Benefits</h5>
+                            <ul className="space-y-3 text-sm text-muted-foreground">
+                                <li className="flex items-center gap-3"><Clock size={16} className="text-primary" /> Unlimited Paid Time Off</li>
+                                <li className="flex items-center gap-3"><Globe size={16} className="text-primary" /> Fully Remote & Global Culture</li>
+                                <li className="flex items-center gap-3"><Star size={16} className="text-primary" /> Competitive Equity Packages</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             
             <Footer />
         </main>
-    )
-}
-
-function CheckCircle2({ className }: { className?: string }) {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={className}
-        >
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-            <path d="m9 12 2 2 4-4" />
-        </svg>
     )
 }

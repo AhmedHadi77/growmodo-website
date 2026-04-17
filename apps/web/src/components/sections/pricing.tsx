@@ -101,7 +101,7 @@ export function Pricing() {
                             </div>
 
                             <Link 
-                                href="/book" 
+                                href="/checkout" 
                                 className={cn(
                                     "w-full rounded-full h-11 inline-flex items-center justify-center font-bold transition-all",
                                     plan.popular 

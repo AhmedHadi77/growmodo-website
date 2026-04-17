@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/footer";
 import { FloatingActions } from "@/components/layout/floating-actions";
 import { Hero } from "@/components/sections/hero";
 import { SocialProof } from "@/components/sections/social-proof";
+import { FounderVision } from "@/components/sections/founder-message";
 import { Process } from "@/components/sections/process";
 import { TalentsGrid } from "@/components/sections/talents";
 import { Services } from "@/components/sections/services";
@@ -15,6 +16,7 @@ export default function Home() {
       <Header />
       <Hero />
       <SocialProof />
+      <FounderVision />
       <TalentsGrid />
       <Process />
       <Services />

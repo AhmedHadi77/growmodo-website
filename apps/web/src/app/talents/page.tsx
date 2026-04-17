@@ -22,6 +22,15 @@ export default function TalentsPage() {
                     <p className="text-lg text-muted-foreground max-w-3xl">
                         Skip the agonizing months of recruiting, interviewing, and onboarding. Our rigorous vetting connects you instantly with pre-vetted AI engineers, full-stack developers, and senior designers who operate at the apex of their fields.
                     </p>
+                    
+                    {/* Category Tabs */}
+                    <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+                        {["All Talent", "AI Engineers", "Designers", "Fullstack", "Webflow"].map((cat) => (
+                            <button key={cat} className={`px-6 py-2 rounded-full border border-border shadow-sm text-sm font-semibold transition-all hover:bg-primary hover:text-white ${cat === 'All Talent' ? 'bg-primary text-white' : 'bg-background text-muted-foreground'}`}>
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
                 </motion.div>
 
                 {/* Animated graphic section */}
