@@ -60,7 +60,7 @@ export default function CareersPage() {
                             Build the Future <br /> with Ahmed Hadi
                         </h1>
                         <p className="text-xl text-muted-foreground leading-relaxed italic">
-                            "We don't hire employees. We onboard partners who are obsessed with excellence."
+                            &quot;We don&apos;t hire employees. We onboard partners who are obsessed with excellence.&quot;
                         </p>
                     </motion.div>
                 </div>

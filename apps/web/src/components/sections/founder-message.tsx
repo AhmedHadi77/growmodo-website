@@ -69,10 +69,10 @@ export function FounderVision() {
                             <Quote className="absolute -top-6 -left-8 w-16 h-16 text-primary/10 -z-10" />
                             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed italic">
                                 <p>
-                                    "When I started Elevate, I saw a world full of talent but filtered through broken systems. Agencies were too slow, and freelancers were too inconsistent. We built Elevate to bridge that gap—merging the flexibility of a membership with the elite quality of a top-tier engineering firm."
+                                    &quot;When I started Elevate, I saw a world full of talent but filtered through broken systems. Agencies were too slow, and freelancers were too inconsistent. We built Elevate to bridge that gap—merging the flexibility of a membership with the elite quality of a top-tier engineering firm.&quot;
                                 </p>
                                 <p>
-                                    "Our mission is simple: to empower high-growth companies with the technical infrastructure and human creativity they need to scale at the speed of thought. Whether you're building a new AI platform or scaling a complex React suite, we are your real-time partners in excellence."
+                                    &quot;Our mission is simple: to empower high-growth companies with the technical infrastructure and human creativity they need to scale at the speed of thought. Whether you&apos;re building a new AI platform or scaling a complex React suite, we are your real-time partners in excellence.&quot;
                                 </p>
                             </div>
                         </motion.div>

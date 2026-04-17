@@ -32,7 +32,7 @@ export function Hero() {
                         transition={{ duration: 0.5 }}
                         className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-[1.1] tracking-tight mb-8"
                     >
-                        Frustrated with Unreliable Freelancers, But Don't Have the Time to Find In-House <br className="hidden md:block" />
+                        Frustrated with Unreliable Freelancers, But Don&apos;t Have the Time to Find In-House <br className="hidden md:block" />
                         <span className="text-[#cbf026] dark:text-[#d4f933] drop-shadow-sm min-h-[1.2em] inline-block mt-2">
                             {roles[currentRole]}
                         </span>
@@ -44,7 +44,7 @@ export function Hero() {
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium mb-12"
                     >
-                        You're scaling fast, but creative bottlenecks are slowing you down. We've built something different—a flexible talent membership that gives you instant access to vetted professionals who "get you"!
+                        You&apos;re scaling fast, but creative bottlenecks are slowing you down. We&apos;ve built something different—a flexible talent membership that gives you instant access to vetted professionals who &quot;get you&quot;!
                     </motion.p>
 
                     <motion.div

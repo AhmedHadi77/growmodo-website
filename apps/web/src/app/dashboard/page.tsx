@@ -32,7 +32,7 @@ export default function DashboardPage() {
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
                         <h1 className="text-4xl font-heading font-extrabold tracking-tight text-foreground">Client Portal</h1>
                         <p className="text-muted-foreground mt-1 flex items-center gap-2">
-                            Welcome back. Ahmed's team is currently processing <Badge variant="secondary" className="bg-[#cbf026]/20 text-[#222]">2 Active Sprints</Badge>
+                            Welcome back. Ahmed&apos;s team is currently processing <Badge variant="secondary" className="bg-[#cbf026]/20 text-[#222]">2 Active Sprints</Badge>
                         </p>
                     </motion.div>
                     
