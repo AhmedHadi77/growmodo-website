@@ -12,10 +12,12 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
+    "prisma": "^5.22.0",
     "turbo": "latest",
     "typescript": "^5.0.0"
   },
