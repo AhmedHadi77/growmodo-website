@@ -4,33 +4,27 @@ import { motion } from "framer-motion"
 const talents = [
     {
         name: "Zeke S.",
-        role: "Webflow Developer",
+        role: "AI Automation Engineer",
         color: "bg-blue-600",
-        avatar: "https://i.pravatar.cc/300?img=11",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
     },
     {
         name: "Russel W.",
-        role: "Graphic Designer",
+        role: "Senior Full Stack Developer",
         color: "bg-[#34d399]", // Emerald/Mint
-        avatar: "https://i.pravatar.cc/300?img=5",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop",
     },
     {
         name: "Kristian L.",
-        role: "Wordpress Developer",
+        role: "UI/UX Product Designer",
         color: "bg-[#cbf026]", // Lime
-        avatar: "https://i.pravatar.cc/300?img=14",
+        avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
     },
     {
         name: "Aira L.",
-        role: "Shopify Developer",
+        role: "Senior Backend Engineer",
         color: "bg-white",
-        avatar: "https://i.pravatar.cc/300?img=47",
-    },
-    {
-        name: "Alden M.",
-        role: "Developer",
-        color: "bg-blue-600",
-        avatar: "https://i.pravatar.cc/300?img=15",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
     },
 ]
 

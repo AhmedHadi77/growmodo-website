@@ -52,9 +52,12 @@ export function AIAssistant() {
             const data = await res.json()
             if (data.content) {
                 setMessages([...newMessages, { role: "assistant", content: data.content }])
+            } else {
+                setMessages([...newMessages, { role: "assistant", content: "I'm sorry, I'm having trouble connecting right now. Please try again later or book a call with us!" }])
             }
         } catch (error) {
             console.error(error)
+            setMessages([...newMessages, { role: "assistant", content: "Oops! Something went wrong. Please check your connection." }])
         } finally {
             setIsLoading(false)
         }

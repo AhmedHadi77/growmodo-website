@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { ArrowRight, TrendingUp, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import Link from "next/link"
 
 const cases = [
     {
@@ -64,7 +65,9 @@ export function CaseStudies() {
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                                 <div className="absolute inset-0 bg-background/50 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-center justify-center">
-                                    <Button className="rounded-full shadow-2xl px-6 h-12">Read Case Study</Button>
+                                    <Link href="/showcase/collab-ai">
+                                        <Button className="rounded-full shadow-2xl px-6 h-12">Read Case Study</Button>
+                                    </Link>
                                 </div>
                             </div>
 

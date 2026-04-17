@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function ShowcasePage() {
     return (
@@ -26,8 +27,8 @@ export default function ShowcasePage() {
                 </motion.div>
 
                 <div className="space-y-32">
-                    {/* Project 1 */}
                     <motion.div 
+                        id="web-apps"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
@@ -60,14 +61,16 @@ export default function ShowcasePage() {
                                 <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">Dashboard</span>
                                 <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">AI Integration</span>
                             </div>
-                            <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
-                                Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </Button>
+                            <Link href="/showcase/collab-ai">
+                                <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
+                                    Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                </Button>
+                            </Link>
                         </div>
                     </motion.div>
 
-                    {/* Project 2 */}
                     <motion.div 
+                        id="case-studies"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
@@ -86,9 +89,11 @@ export default function ShowcasePage() {
                                 <span className="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-semibold">Mobile App</span>
                                 <span className="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-semibold">UI/UX Design</span>
                             </div>
-                            <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
-                                Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </Button>
+                            <Link href="/showcase/collab-ai">
+                                <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
+                                    Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                </Button>
+                            </Link>
                         </div>
                         <motion.div 
                             whileHover={{ scale: 1.02 }}
@@ -104,6 +109,47 @@ export default function ShowcasePage() {
                                 />
                             </div>
                         </motion.div>
+                    </motion.div>
+
+                    {/* Project 3 - Custom Automations */}
+                    <motion.div 
+                        id="automations"
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.8 }}
+                        className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+                    >
+                         <motion.div 
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-border/50 bg-gradient-to-br from-green-500/20 to-blue-500/20 p-8 flex items-center justify-center"
+                        >
+                            <div className="relative w-full h-full flex flex-col items-center justify-center space-y-4">
+                                <div className="w-24 h-24 rounded-2xl bg-primary/20 flex items-center justify-center">
+                                    <svg className="w-12 h-12 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                                </div>
+                                <span className="font-heading font-bold text-2xl">Auto-Flow Systems</span>
+                            </div>
+                        </motion.div>
+                        <div className="space-y-6">
+                            <h2 className="text-3xl md:text-5xl font-heading font-bold">Logistics AI Automation</h2>
+                            <p className="text-lg text-muted-foreground leading-relaxed">
+                                Shaving off 40% of operational overhead for global logistics partners. We designed a custom automation engine that predicts shipment bottlenecks before they happen.
+                            </p>
+                            <p className="text-lg text-muted-foreground leading-relaxed">
+                                Our solution integrates directly with existing ERPs, using vector-based reasoning to suggest route optimizations in real-time. This isn't just a dashboard; it's an autopilot for your entire supply chain.
+                            </p>
+                            <div className="flex gap-4 pt-4 border-t border-border/50">
+                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">Automation</span>
+                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">AI Engine</span>
+                            </div>
+                            <Link href="/showcase/collab-ai">
+                                <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
+                                    Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                </Button>
+                            </Link>
+                        </div>
                     </motion.div>
                 </div>
             </div>
