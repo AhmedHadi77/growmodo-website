@@ -1,6 +1,4 @@
 import * as React from "react"
-import NextAuth from "next-auth"
-import Google from "next-auth/providers/google"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Loader2, Mail, Lock, ArrowRight } from "lucide-react"
