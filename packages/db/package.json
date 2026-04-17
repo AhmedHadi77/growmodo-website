@@ -2,6 +2,9 @@
   "name": "@growmodo/db",
   "version": "1.0.0",
   "main": "index.ts",
+  "scripts": {
+    "build": "prisma generate --schema=../../prisma/schema.prisma"
+  },
   "dependencies": {
     "@prisma/client": "^5.0.0"
   },
