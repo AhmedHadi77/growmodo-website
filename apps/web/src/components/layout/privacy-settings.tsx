@@ -108,7 +108,7 @@ export function PrivacySettings() {
                                             <div className="text-xs font-medium text-foreground">{service.name}</div>
                                             <div className="text-[10px] text-muted-foreground">{service.description}</div>
                                         </div>
-                                        <Info size={14} className="text-muted-foreground hover:text-primary cursor-pointer" title="More info" />
+                                        <Info size={14} className="text-muted-foreground hover:text-primary cursor-pointer" />
                                     </div>
                                 ))}
                             </div>
