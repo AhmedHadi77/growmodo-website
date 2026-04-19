@@ -97,22 +97,39 @@ async function saveLead(data: ContactPayload) {
 }
 
 async function sendEmail(data: ContactPayload) {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS || process.env.EMAIL_PASS === "your-16-digit-app-password-here") {
+  const emailUser =
+    process.env.EMAIL_USER ??
+    process.env.EMAIL_FROM ??
+    process.env.GMAIL_USER ??
+    process.env.SMTP_USER ??
+    "ahmed888hadi@gmail.com"
+
+  const emailPass =
+    process.env.EMAIL_PASS ??
+    process.env.GMAIL_APP_PASSWORD ??
+    process.env.SMTP_PASS
+
+  const emailTo =
+    process.env.LEAD_TO_EMAIL ??
+    process.env.EMAIL_TO ??
+    emailUser
+
+  if (!emailPass || emailPass === "your-16-digit-app-password-here") {
     return { sent: false, reason: "Email credentials are not configured" }
   }
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: emailUser,
+      pass: emailPass,
     },
   })
 
   const name = formatName(data)
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: process.env.LEAD_TO_EMAIL ?? "ahmed888hadi@gmail.com",
+    from: process.env.EMAIL_FROM ?? emailUser,
+    to: emailTo,
     subject: data.type === "job_application" ? `New Talent Application: ${name}` : `New ElvateAI Lead: ${name}`,
     html: buildEmailHtml(data),
   })

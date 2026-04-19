@@ -15,6 +15,9 @@
     "clean": "turbo run clean",
     "postinstall": "prisma generate"
   },
+  "dependencies": {
+    "nodemailer": "^8.0.5"
+  },
   "devDependencies": {
     "prettier": "^3.2.5",
     "prisma": "^5.22.0",
