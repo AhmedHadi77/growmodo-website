@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { Loader2, Mail, Lock, ArrowRight } from "lucide-react"
 import { signIn } from "@/auth"
 import { SignInForm } from "./signin-form"
 
@@ -11,14 +10,10 @@ export default function SignInPage() {
             <Header />
             
             <div className="flex-1 flex items-center justify-center px-6 pt-32 pb-20 relative overflow-hidden">
-                {/* Decorative background blur */}
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] pointer-events-none" />
-
                 <div className="w-full max-w-md relative z-10 transition-all duration-500">
                     <div className="text-center mb-10">
                         <h1 className="text-4xl font-heading font-extrabold tracking-tight mb-2">Welcome Back</h1>
-                        <p className="text-muted-foreground">Enter your credentials to access the client portal.</p>
+                        <p className="text-muted-foreground">Access your ElvateAI client portal.</p>
                     </div>
 
                     <div className="bg-card/40 backdrop-blur-xl border border-border/50 rounded-[2rem] p-8 md:p-10 shadow-2xl">
@@ -46,7 +41,7 @@ export default function SignInPage() {
                     </div>
 
                     <p className="text-center mt-8 text-sm text-muted-foreground">
-                        Don't have an account? <button className="text-primary font-semibold hover:underline">Apply as a Talent</button>
+                        Need access? <a href="/book" className="text-primary font-semibold hover:underline">Book a discovery call</a>
                     </p>
                 </div>
             </div>

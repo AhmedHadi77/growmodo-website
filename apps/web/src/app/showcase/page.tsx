@@ -1,12 +1,14 @@
 "use client"
+
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { FloatingActions } from "@/components/layout/floating-actions"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { showcaseItems, testimonials } from "@/lib/growmodo-content"
 
 export default function ShowcasePage() {
     return (
@@ -19,139 +21,64 @@ export default function ShowcasePage() {
                     transition={{ duration: 0.8 }}
                     className="flex flex-col items-center text-center space-y-6 mb-20"
                 >
-                    <span className="text-secondary font-bold tracking-widest uppercase text-sm">Our Work</span>
-                    <h1 className="text-5xl md:text-7xl font-heading font-extrabold tracking-tight">Design & Code That Helps<br />Your Business Grow</h1>
-                    <p className="text-lg text-muted-foreground max-w-2xl">
-                        At Elevate, we don't just build beautiful interfaces; we engineer ecosystems. Explore some of our recent premium projects showcasing bleeding-edge technology paired with high-end aesthetic execution. 
+                    <span className="text-secondary font-bold tracking-widest uppercase text-sm">Showcase</span>
+                    <h1 className="text-5xl md:text-7xl font-heading font-extrabold tracking-tight">Selected work from our talents</h1>
+                    <p className="text-lg text-muted-foreground max-w-3xl">
+                        ElvateAI supports agencies, marketing teams, and scale-ups with recurring design, development, creative, and maintenance requests.
                     </p>
                 </motion.div>
 
-                <div className="space-y-32">
-                    <motion.div 
-                        id="web-apps"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8 }}
-                        className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-                    >
-                        <motion.div 
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                            className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-border/50"
+                <div id="selected-work" className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {showcaseItems.map((project, index) => (
+                        <motion.article
+                            key={project.slug}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.08 }}
+                            className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm"
                         >
-                            <Image 
-                                src="/dashboard.png" 
-                                alt="Dashboard Interface" 
-                                fill
-                                className="object-cover"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
-                        </motion.div>
-                        <div className="space-y-6">
-                            <h2 className="text-3xl md:text-5xl font-heading font-bold">Collab AI SaaS Platform</h2>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                The modern enterprise requires more than just CRMs; it requires proactive AI agents that seamlessly plug into their daily workflows. We partnered with Collab to build a dark-mode focused, glassmorphic analytics dashboard.
-                            </p>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                Our development team utilized advanced Next.js server components and WebGL for data visualization, ensuring that rendering thousands of data points at 60fps feels utterly effortless. The design system prioritizes vital metrics with electric neon highlights, guiding user attention instantly.
-                            </p>
-                            <div className="flex gap-4 pt-4 border-t border-border/50">
-                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">Web App</span>
-                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">Dashboard</span>
-                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">AI Integration</span>
-                            </div>
-                            <Link href="/showcase/collab-ai">
-                                <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
-                                    Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                                </Button>
+                            <Link href={`/showcase/${project.slug}`} className="relative block aspect-[4/3] overflow-hidden">
+                                <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                             </Link>
-                        </div>
-                    </motion.div>
-
-                    <motion.div 
-                        id="case-studies"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8 }}
-                        className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-                    >
-                        <div className="space-y-6 order-2 lg:order-1">
-                            <h2 className="text-3xl md:text-5xl font-heading font-bold">Night Nest iOS App</h2>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                Transitioning from simple utility apps to fully immersive mobile experiences. Night Nest requested an interface that felt completely alien compared to native standard components.
-                            </p>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                Utilizing React Native and custom Reanimated logic, we built a mobile journey characterized by smooth, ethereal gradients and playful 3D interactivity. The app feels alive, responding to gyroscopic movements and touch momentum with sub-millisecond latency. A true showcase of our mobile engineering capabilities.
-                            </p>
-                            <div className="flex gap-4 pt-4 border-t border-border/50">
-                                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-semibold">Mobile App</span>
-                                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm font-semibold">UI/UX Design</span>
-                            </div>
-                            <Link href="/showcase/collab-ai">
-                                <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
-                                    Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                                </Button>
-                            </Link>
-                        </div>
-                        <motion.div 
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                            className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-border/50 order-1 lg:order-2 bg-gradient-to-br from-purple-500/20 to-blue-500/20 p-8 flex items-center justify-center"
-                        >
-                            <div className="relative w-full h-full max-w-[300px] shadow-2xl rounded-[3rem] overflow-hidden border-8 border-background">
-                                <Image 
-                                    src="/mobile_app.png" 
-                                    alt="Mobile App Interface" 
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                        </motion.div>
-                    </motion.div>
-
-                    {/* Project 3 - Custom Automations */}
-                    <motion.div 
-                        id="automations"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8 }}
-                        className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-                    >
-                         <motion.div 
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                            className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-border/50 bg-gradient-to-br from-green-500/20 to-blue-500/20 p-8 flex items-center justify-center"
-                        >
-                            <div className="relative w-full h-full flex flex-col items-center justify-center space-y-4">
-                                <div className="w-24 h-24 rounded-2xl bg-primary/20 flex items-center justify-center">
-                                    <svg className="w-12 h-12 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                            <div className="p-8">
+                                <p className="mb-3 text-sm font-bold uppercase tracking-wider text-primary">{project.category}</p>
+                                <h2 className="font-heading text-3xl font-bold mb-4">{project.title}</h2>
+                                <p className="text-muted-foreground leading-relaxed mb-6">{project.summary}</p>
+                                <div className="mb-8 flex flex-wrap gap-3">
+                                    {project.services.map((service) => (
+                                        <span key={service} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
+                                            {service}
+                                        </span>
+                                    ))}
                                 </div>
-                                <span className="font-heading font-bold text-2xl">Auto-Flow Systems</span>
+                                <Link href={`/showcase/${project.slug}`}>
+                                    <Button className="rounded-md gap-2">
+                                        Read Work Story <ArrowRight className="h-4 w-4" />
+                                    </Button>
+                                </Link>
                             </div>
-                        </motion.div>
-                        <div className="space-y-6">
-                            <h2 className="text-3xl md:text-5xl font-heading font-bold">Logistics AI Automation</h2>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                Shaving off 40% of operational overhead for global logistics partners. We designed a custom automation engine that predicts shipment bottlenecks before they happen.
-                            </p>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                Our solution integrates directly with existing ERPs, using vector-based reasoning to suggest route optimizations in real-time. This isn't just a dashboard; it's an autopilot for your entire supply chain.
-                            </p>
-                            <div className="flex gap-4 pt-4 border-t border-border/50">
-                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">Automation</span>
-                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">AI Engine</span>
-                            </div>
-                            <Link href="/showcase/collab-ai">
-                                <Button className="mt-8 rounded-full h-12 px-8 font-semibold gap-2 group">
-                                    Read Case Study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                                </Button>
-                            </Link>
-                        </div>
-                    </motion.div>
+                        </motion.article>
+                    ))}
                 </div>
+
+                <section id="testimonials" className="pt-24">
+                    <div className="text-center max-w-2xl mx-auto mb-12">
+                        <h2 className="font-heading text-4xl font-bold mb-4">What clients say</h2>
+                        <p className="text-muted-foreground">Teams use ElvateAI to keep creative and technical work moving without the friction of hiring.</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {testimonials.slice(0, 6).map((testimonial) => (
+                            <div key={testimonial.name} className="rounded-xl border border-border bg-card p-6">
+                                <p className="text-muted-foreground leading-relaxed mb-6">
+                                    &quot;{testimonial.quote}&quot;
+                                </p>
+                                <p className="font-heading font-bold">{testimonial.name}</p>
+                                <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
             </div>
             <Footer />
             <FloatingActions />

@@ -1,40 +1,44 @@
 "use client"
+
 import * as React from "react"
 import { motion } from "framer-motion"
-import { XCircle } from "lucide-react"
-
-const roles = [
-    "Shopify Developers",
-    "UI/UX Designers",
-    "Webflow Developers",
-    "AI Engineers",
-]
+import { ArrowRight, CheckCircle2 } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { brand, talentProfiles, talentRoles } from "@/lib/growmodo-content"
 
 export function Hero() {
     const [currentRole, setCurrentRole] = React.useState(0)
 
     React.useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentRole((prev) => (prev + 1) % roles.length)
-        }, 2500)
+            setCurrentRole((prev) => (prev + 1) % talentRoles.length)
+        }, 2200)
         return () => clearInterval(interval)
     }, [])
 
     return (
-        <section className="pt-32 pb-16 md:pt-48 md:pb-24 bg-card dark:bg-[#0f0f0f] border-b border-border/50 relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+        <section className="pt-32 pb-16 md:pt-44 md:pb-24 bg-card dark:bg-[#0f0f0f] border-b border-border/50 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center relative z-10">
+                <div className="flex flex-col items-start pt-10 md:pt-0">
+                    <motion.div
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-muted-foreground"
+                    >
+                        <CheckCircle2 className="h-4 w-4 text-[#7bbf00]" />
+                        Onboard vetted experts in 24 hours
+                    </motion.div>
 
-                {/* Left Content */}
-                <div className="w-full md:w-[60%] flex flex-col items-start pt-12 md:pt-0">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-[1.1] tracking-tight mb-8"
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-[1.05] tracking-tight mb-8"
                     >
-                        Frustrated with Unreliable Freelancers, But Don&apos;t Have the Time to Find In-House <br className="hidden md:block" />
-                        <span className="text-[#cbf026] dark:text-[#d4f933] drop-shadow-sm min-h-[1.2em] inline-block mt-2">
-                            {roles[currentRole]}
+                        {brand.heroTitle}
+                        <span className="block text-[#7bbf00] dark:text-[#cbf026] min-h-[1.1em] mt-3">
+                            {talentRoles[currentRole]}
                         </span>
                     </motion.h1>
 
@@ -42,41 +46,60 @@ export function Hero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium mb-12"
+                        className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium mb-10"
                     >
-                        You&apos;re scaling fast, but creative bottlenecks are slowing you down. We&apos;ve built something different—a flexible talent membership that gives you instant access to vetted professionals who &quot;get you&quot;!
+                        {brand.heroSubtitle}
                     </motion.p>
 
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
+                        initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
+                        transition={{ duration: 0.5, delay: 0.35 }}
                         className="flex flex-wrap items-center gap-4"
                     >
-                        <div className="flex items-center gap-2 bg-[#222] dark:bg-[#111] px-5 py-3 rounded-full border border-white/10 dark:border-white/5">
-                            <div className="w-5 h-5 bg-[#cbf026] text-black rounded-full flex items-center justify-center font-bold text-xs"><XCircle className="w-3 h-3" /></div>
-                            <span className="text-white text-sm font-semibold tracking-wide">No Endless Profile Scrolling</span>
-                        </div>
-                        <div className="flex items-center gap-2 bg-[#222] dark:bg-[#111] px-5 py-3 rounded-full border border-white/10 dark:border-white/5">
-                            <div className="w-5 h-5 bg-[#cbf026] text-black rounded-full flex items-center justify-center font-bold text-xs"><XCircle className="w-3 h-3" /></div>
-                            <span className="text-white text-sm font-semibold tracking-wide">No Draining Interviews</span>
-                        </div>
-                        <div className="flex items-center gap-2 bg-[#222] dark:bg-[#111] px-5 py-3 rounded-full border border-white/10 dark:border-white/5">
-                            <div className="w-5 h-5 bg-[#cbf026] text-black rounded-full flex items-center justify-center font-bold text-xs"><XCircle className="w-3 h-3" /></div>
-                            <span className="text-white text-sm font-semibold tracking-wide">No Recruiting Fees</span>
-                        </div>
+                        <Link href="/book" className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-6 font-bold text-primary-foreground shadow-lg transition-all hover:bg-primary/90">
+                            {brand.primaryCta}
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                        <Link href="/showcase" className="inline-flex h-12 items-center justify-center rounded-md border border-border bg-background px-6 font-bold text-foreground transition-all hover:bg-muted">
+                            {brand.secondaryCta}
+                        </Link>
                     </motion.div>
-                </div>
 
-                {/* Right Decorative (Placeholder for future avatars scrolling if needed) */}
-                <div className="w-full md:w-[40%] hidden lg:flex flex-col items-end opacity-20 pointer-events-none select-none">
-                    <div className="space-y-4 text-right">
-                        {roles.slice(1).map((r, i) => (
-                            <h2 key={i} className="text-5xl font-heading font-bold text-muted-foreground">{r}</h2>
+                    <div className="mt-10 flex flex-wrap gap-3 text-sm font-semibold text-muted-foreground">
+                        {["No endless profile scrolling", "No draining interviews", "No recruiting fees"].map((item) => (
+                            <span key={item} className="rounded-full border border-border bg-background px-4 py-2">
+                                {item}
+                            </span>
                         ))}
                     </div>
                 </div>
 
+                <motion.div
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    className="grid grid-cols-2 gap-4"
+                >
+                    {talentProfiles.slice(0, 4).map((talent, index) => (
+                        <div
+                            key={talent.name}
+                            className={`relative min-h-[220px] overflow-hidden rounded-xl border border-border/50 shadow-xl ${talent.accent} ${index % 2 === 1 ? "mt-8" : ""}`}
+                        >
+                            <Image
+                                src={talent.image}
+                                alt={talent.name}
+                                fill
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                                className="object-cover mix-blend-multiply opacity-85 dark:mix-blend-normal"
+                            />
+                            <div className="absolute inset-x-3 bottom-3 rounded-lg bg-background/95 p-3 shadow-lg backdrop-blur">
+                                <p className="font-heading text-base font-bold text-foreground">{talent.name}</p>
+                                <p className="text-xs font-medium text-muted-foreground">{talent.role}</p>
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
             </div>
         </section>
     )

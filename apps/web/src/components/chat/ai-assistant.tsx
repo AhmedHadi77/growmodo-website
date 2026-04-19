@@ -10,7 +10,7 @@ type Message = { role: "user" | "assistant"; content: string }
 export function AIAssistant() {
     const [isOpen, setIsOpen] = React.useState(false)
     const [messages, setMessages] = React.useState<Message[]>([
-        { role: "assistant", content: "Hi! I'm Elevate AI. How can I help you scale your engineering or design teams today?" }
+        { role: "assistant", content: "Hi! I'm the ElvateAI assistant. Ask me about plans, scope, talents, or booking a discovery call." }
     ])
     const [input, setInput] = React.useState("")
     const [isLoading, setIsLoading] = React.useState(false)
@@ -23,21 +23,39 @@ export function AIAssistant() {
     }, [messages])
 
     React.useEffect(() => {
-        const handleOpenChat = (e: CustomEvent<string>) => {
+        const handleOpenChat = (event: Event) => {
+            const e = event as CustomEvent<string>
             setIsOpen(true)
             if (e.detail) {
                 setInput(e.detail)
             }
         }
-        window.addEventListener('open-ai-chat' as any, handleOpenChat as any)
-        return () => window.removeEventListener('open-ai-chat' as any, handleOpenChat as any)
+        window.addEventListener('open-ai-chat', handleOpenChat)
+        return () => window.removeEventListener('open-ai-chat', handleOpenChat)
     }, [])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!input.trim() || isLoading) return
         
-        const userMsg = input
+        const userMsg = input.trim()
+        // Simple greeting detection for immediate responses
+        const greetingRegex = /^(hi|hello|hey|good morning|good afternoon|good evening)\b/i
+        if (greetingRegex.test(userMsg)) {
+            const greetingResponse = "Hello! I can help with ElvateAI pricing, talent roles, scope of work, or booking a discovery call."
+            setMessages([...messages, { role: "user", content: userMsg }, { role: "assistant", content: greetingResponse }])
+            setInput("")
+            return
+        }
+        // Simple small talk detection
+        const smallTalkRegex = /^(how are you|what\'s up|how\'s it going)\b/i
+        if (smallTalkRegex.test(userMsg)) {
+            const smallTalkResponse = "I'm doing well, thanks. Want help choosing a ElvateAI plan or checking whether a task is in scope?"
+            setMessages([...messages, { role: "user", content: userMsg }, { role: "assistant", content: smallTalkResponse }])
+            setInput("")
+            return
+        }
+        
         setInput("")
         const newMessages: Message[] = [...messages, { role: "user", content: userMsg }]
         setMessages(newMessages)
@@ -75,7 +93,7 @@ export function AIAssistant() {
                     >
                         <div className="bg-primary px-4 py-4 flex items-center justify-between text-primary-foreground">
                             <div className="flex items-center gap-2 font-heading font-bold">
-                                <Bot className="w-5 h-5" /> Elevate Agent <Badge className="bg-white/20 text-[10px] px-1.5 py-0 h-4 border-none hover:bg-white/30">REAL TIME</Badge>
+                                <Bot className="w-5 h-5" /> ElvateAI Assistant <Badge className="bg-white/20 text-[10px] px-1.5 py-0 h-4 border-none hover:bg-white/30">REAL TIME</Badge>
                             </div>
                             <button onClick={() => setIsOpen(false)} className="hover:bg-black/10 rounded-full p-1 transition-colors">
                                 <X className="w-5 h-5" />

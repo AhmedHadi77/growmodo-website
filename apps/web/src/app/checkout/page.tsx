@@ -1,154 +1,136 @@
 "use client"
 
 import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { Check, CreditCard, Shield, Zap, ArrowRight, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Check, Loader2, Shield } from "lucide-react"
+import { maintenancePlan, pricingPlans } from "@/lib/growmodo-content"
 
 export default function CheckoutPage() {
-    const [step, setStep] = React.useState(1)
-    const [isProcessing, setIsProcessing] = React.useState(false)
+    const [selectedPlan, setSelectedPlan] = React.useState(pricingPlans[1].label)
+    const [email, setEmail] = React.useState("")
+    const [company, setCompany] = React.useState("")
+    const [website, setWebsite] = React.useState("")
+    const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle")
+    const [error, setError] = React.useState("")
 
-    const handleNext = () => {
-        if (step === 2) {
-            setIsProcessing(true)
-            setTimeout(() => {
-                setIsProcessing(false)
-                setStep(3)
-            }, 2500)
-        } else {
-            setStep(step + 1)
+    const planOptions = [
+        ...pricingPlans.map((plan) => ({
+            label: `${plan.label} - ${plan.price}${plan.cadence}`,
+            value: plan.label,
+        })),
+        { label: `${maintenancePlan.name} - ${maintenancePlan.price}${maintenancePlan.cadence}`, value: maintenancePlan.name },
+    ]
+
+    React.useEffect(() => {
+        if (window.location.search.includes("plan=maintenance")) {
+            setSelectedPlan(maintenancePlan.name)
+        }
+    }, [])
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        setStatus("loading")
+        setError("")
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    type: "lead",
+                    firstName: "Checkout",
+                    lastName: "Request",
+                    email,
+                    company,
+                    website,
+                    phone: `Selected plan: ${selectedPlan}`,
+                }),
+            })
+
+            const data = await response.json()
+            if (!response.ok) {
+                throw new Error(data.error || "Unable to submit checkout request")
+            }
+
+            setStatus("success")
+        } catch (err) {
+            setStatus("error")
+            setError(err instanceof Error ? err.message : "Unable to submit checkout request")
         }
     }
 
     return (
         <main className="flex min-h-screen flex-col bg-slate-50">
             <Header />
-            
+
             <div className="flex-1 pt-32 pb-20 px-6 max-w-5xl mx-auto w-full">
-                {/* Progress Bar */}
-                <div className="flex items-center justify-between mb-12 max-w-xs mx-auto">
-                    {[1, 2, 3].map((s) => (
-                        <div key={s} className="flex items-center">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${step >= s ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
-                                {step > s ? <Check size={18} /> : s}
-                            </div>
-                            {s < 3 && <div className={`w-12 h-0.5 mx-2 ${step > s ? 'bg-primary' : 'bg-muted'}`} />}
-                        </div>
-                    ))}
+                <div className="text-center mb-12">
+                    <span className="text-secondary font-bold tracking-widest uppercase text-sm">Start Membership</span>
+                    <h1 className="mt-4 text-5xl md:text-6xl font-heading font-extrabold tracking-tight text-foreground">
+                        Confirm your plan request
+                    </h1>
+                    <p className="mt-4 text-muted-foreground">
+                        Stripe billing can be connected with live keys later. For now, this captures the selected plan and creates a lead for follow-up.
+                    </p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    
-                    {/* Main Content Area */}
-                    <div className="lg:col-span-2 space-y-8">
-                        <AnimatePresence mode="wait">
-                            {step === 1 && (
-                                <motion.div
-                                    key="step1"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: 20 }}
-                                    className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-border/50"
-                                >
-                                    <h2 className="text-3xl font-heading font-extrabold mb-8 text-foreground">Plan Selection</h2>
-                                    <div className="space-y-4">
-                                        <div className="p-6 rounded-2xl border-2 border-primary bg-primary/5 flex items-center justify-between">
-                                            <div>
-                                                <Badge className="mb-2">Selected</Badge>
-                                                <h3 className="text-xl font-bold">Agency Scale</h3>
-                                                <p className="text-sm text-muted-foreground">Comprehensive suite for scaling businesses.</p>
-                                            </div>
-                                            <div className="text-2xl font-bold font-heading">$12,500</div>
-                                        </div>
-                                        <div className="p-6 rounded-2xl border border-border bg-card hover:bg-muted/50 cursor-pointer transition-colors flex items-center justify-between opacity-60">
-                                            <div>
-                                                <h3 className="text-xl font-bold">AI Pilot</h3>
-                                                <p className="text-sm text-muted-foreground">Perfect for fast validation.</p>
-                                            </div>
-                                            <div className="text-2xl font-bold font-heading">$4,900</div>
-                                        </div>
-                                    </div>
-                                    <Button onClick={handleNext} className="w-full mt-12 py-7 text-lg font-bold group">
-                                        Continue to Billing <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                                    </Button>
-                                </motion.div>
-                            )}
+                    <form onSubmit={handleSubmit} className="lg:col-span-2 bg-white rounded-xl p-8 md:p-12 shadow-sm border border-border/50 space-y-6">
+                        <div>
+                            <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Plan</label>
+                            <select
+                                value={selectedPlan}
+                                onChange={(event) => setSelectedPlan(event.target.value)}
+                                className="mt-2 w-full bg-slate-50 border border-border p-4 rounded-lg focus:outline-none focus:border-primary transition-colors"
+                            >
+                                {planOptions.map((plan) => (
+                                    <option key={plan.value} value={plan.value}>{plan.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Work Email</label>
+                            <input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} className="mt-2 w-full bg-slate-50 border border-border p-4 rounded-lg focus:outline-none focus:border-primary transition-colors" placeholder="name@company.com" />
+                        </div>
+                        <div>
+                            <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Company</label>
+                            <input required value={company} onChange={(event) => setCompany(event.target.value)} className="mt-2 w-full bg-slate-50 border border-border p-4 rounded-lg focus:outline-none focus:border-primary transition-colors" placeholder="Growth Inc." />
+                        </div>
+                        <div>
+                            <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Website</label>
+                            <input required type="url" value={website} onChange={(event) => setWebsite(event.target.value)} className="mt-2 w-full bg-slate-50 border border-border p-4 rounded-lg focus:outline-none focus:border-primary transition-colors" placeholder="https://" />
+                        </div>
 
-                            {step === 2 && (
-                                <motion.div
-                                    key="step2"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: 20 }}
-                                    className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-border/50"
-                                >
-                                    <h2 className="text-3xl font-heading font-extrabold mb-8 text-foreground">Billing Details</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Company Name</label>
-                                            <input type="text" className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:outline-none focus:border-primary transition-colors" placeholder="Growth Inc." />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Tax ID (Optional)</label>
-                                            <input type="text" className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:outline-none focus:border-primary transition-colors" placeholder="DE12345678" />
-                                        </div>
-                                        <div className="space-y-2 md:col-span-2">
-                                            <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Credit Card</label>
-                                            <div className="relative">
-                                                <input type="text" className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:outline-none focus:border-primary transition-colors pl-12" placeholder="0000 0000 0000 0000" />
-                                                <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <Button onClick={handleNext} disabled={isProcessing} className="w-full mt-12 py-7 text-lg font-bold">
-                                        {isProcessing ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing Infrastructure...</> : "Confirm Subscription"}
-                                    </Button>
-                                </motion.div>
-                            )}
+                        {status === "error" && <div className="rounded-lg bg-destructive/10 p-4 text-sm text-destructive">{error}</div>}
+                        {status === "success" && <div className="rounded-lg bg-primary/10 p-4 text-sm font-medium text-foreground">Plan request received. The ElvateAI team will follow up with billing and onboarding details.</div>}
 
-                            {step === 3 && (
-                                <motion.div
-                                    key="step3"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="bg-white rounded-[2.5rem] p-8 md:p-16 shadow-2xl border border-primary/20 text-center space-y-8"
-                                >
-                                    <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-8">
-                                        <Zap size={40} />
-                                    </div>
-                                    <h2 className="text-4xl font-heading font-extrabold text-foreground tracking-tight">Welcome to Elevate!</h2>
-                                    <div className="space-y-4 max-w-sm mx-auto text-muted-foreground">
-                                        <p>Ahmed and the team are being notified right now. Your dedicated workspace is being provisioned.</p>
-                                        <p>Check your email for access details and your onboarding schedule.</p>
-                                    </div>
-                                    <Button className="w-full py-7" onClick={() => window.location.href='/dashboard'}>Go to Dashboard</Button>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
+                        <button disabled={status === "loading"} className="w-full rounded-md bg-primary py-4 font-heading text-lg font-bold text-primary-foreground hover:bg-primary/90 disabled:opacity-70 flex items-center justify-center">
+                            {status === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : "Request This Plan"}
+                        </button>
+                    </form>
 
-                    {/* Summary Sidebar */}
                     <div className="space-y-6">
-                        <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-border/50">
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
                             <h4 className="font-heading font-bold mb-6 flex items-center gap-2">
-                                <Shield className="text-primary w-5 h-5" /> Professional Guarantee
+                                <Shield className="text-primary w-5 h-5" /> Included
                             </h4>
                             <ul className="space-y-4 text-sm text-muted-foreground">
-                                <li className="flex items-center gap-3"><Check size={16} className="text-primary" /> 24/7 Priority Support</li>
-                                <li className="flex items-center gap-3"><Check size={16} className="text-primary" /> Top 1% Dedicated Talent</li>
-                                <li className="flex items-center gap-3"><Check size={16} className="text-primary" /> Weekly Sprint Deliverables</li>
-                                <li className="flex items-center gap-3"><Check size={16} className="text-primary" /> Secure Cloud Infrastructure</li>
+                                {[
+                                    "Dedicated project manager",
+                                    "Unlimited requests",
+                                    "Daily or weekly updates",
+                                    "Pause or cancel anytime",
+                                    "IP and asset ownership",
+                                ].map((item) => (
+                                    <li key={item} className="flex items-center gap-3"><Check size={16} className="text-primary" /> {item}</li>
+                                ))}
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
-            
+
             <Footer />
         </main>
     )

@@ -1,53 +1,60 @@
-import { NextResponse } from 'next/server';
-import { ai } from '@growmodo/ai';
+import { NextResponse } from "next/server"
+import { ai } from "@growmodo/ai"
+import { faqs, maintenancePlan, pricingPlans, scopeCategories, talentRoles } from "@/lib/growmodo-content"
+
+type ChatMessage = {
+  role: "user" | "assistant"
+  content: string
+}
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
-    
-    // We get the chat model and set its role instructions
+    const { messages } = (await req.json()) as { messages: ChatMessage[] }
+
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json({ error: "Messages are required" }, { status: 400 })
+    }
+
+    const pricingSummary = pricingPlans
+      .map((plan) => `${plan.label}: ${plan.price}${plan.cadence}`)
+      .join(", ")
+
+    const scopeSummary = scopeCategories
+      .map((category) => `${category.name}: ${category.items.join(", ")}`)
+      .join("\n")
+
+    const faqSummary = faqs
+      .map((faq) => `Q: ${faq.question}\nA: ${faq.answer}`)
+      .join("\n\n")
+
     const model = ai.getGenerativeModel({
-      model: 'gemini-1.5-flash',
-      systemInstruction: "You are an official Senior AI Consultant for Elevate, a premium global digital and AI automation agency. You report directly to Ahmed Hadi, our CEO and Founder. Your persona is highly professional, concise, and expert. \n\n" +
-        "Key Knowledge Areas:\n" +
-        "1. Pricing: Monthly subscriptions starting at $3,500/mo for a dedicated talent. Pause or cancel anytime.\n" +
-        "2. Our Services (What You Get from Elevate):\n" +
-        "   - Scalable Workforce: Add AI engineers or designers as needed comfortably.\n" +
-        "   - Fully-Managed Team: We handle staff replacements, LLM skill training, team happiness, and HR overhead.\n" +
-        "   - Dedicated Project Manager: A single point of contact who understands your business logic and delivers automated output flawlessly.\n" +
-        "   - Flexible Skill-Matching: Switch your talent stack (e.g., from AI researcher to React developer) with no extra onboarding fees.\n" +
-        "   - Trained for Efficiency: We use programmatic checklists & AI-driven linters to reduce errors and improve turnaround.\n" +
-        "   - Predictable Pricing & Security: Flat rate for elite talent with guaranteed IP & Data Security (enterprise compliance).\n" +
-        "3. Great People (Elite Talent Pool):\n" +
-        "   - We feature a global 'Top 1% Network', including:\n" +
-        "     - Zeke S. (AI Automation Engineer)\n" +
-        "     - Russel W. (Senior Full Stack Developer)\n" +
-        "     - Kristian L. (UI/UX Product Designer)\n" +
-        "     - Aira L. (Senior Backend Engineer)\n" +
-        "4. Process & Projects: Transparent agile scope, weekly sprints, 24/7 communication. We've built SaaS like Collab AI, mobile apps like Night Nest, and logistics automations.\n" +
-        "5. Privacy: We use industrial-grade security (Cloudflare) and compliant asset delivery.\n\n" +
-        "Style Guidelines:\n" +
-        "- Tone: Premium, elite agency tone. Direct and helpful. No generic jargon.\n" +
-        "- Intent Confirmation: At the end of EVERY response, you MUST confirm that you have understood the user's question correctly and ask if they need further details or if your answer addresses their concern (e.g., 'Did I address your question correctly, or would you like more details on this?').\n" +
-        "- Call to Action: If a user shows high interest, mention Ahmed's team is ready to scale their project and encourage booking a Discovery Call (/book).",
-    });
+      model: "gemini-1.5-flash",
+      systemInstruction:
+        "You are the ElvateAI website assistant. Speak as a concise, helpful membership advisor for agencies, marketing teams, and scale-ups.\n\n" +
+        "Core positioning: ElvateAI is a talent membership that gives clients access to AI-empowered designers, developers, video editors, and project managers without hiring full-time employees.\n\n" +
+        `Talent roles: ${talentRoles.join(", ")}.\n\n` +
+        `All Inclusive pricing: ${pricingSummary}. Maintenance plan: ${maintenancePlan.price}${maintenancePlan.cadence}.\n\n` +
+        `Scope of work:\n${scopeSummary}\n\n` +
+        `FAQ knowledge:\n${faqSummary}\n\n` +
+        "Guidelines: Do not describe ElvateAI as a generic AI agency. Mention flat monthly membership pricing, dedicated project manager, unlimited requests, active capacity, and flexible pause/cancel options when relevant. If the visitor shows buying intent, invite them to book a discovery call at /book. Keep responses short and practical.",
+    })
 
     const chat = model.startChat({
-        history: messages.slice(0, -1).map((m: any) => ({
-            role: m.role === 'user' ? 'user' : 'model',
-            parts: [{ text: m.content }]
-        }))
-    });
+      history: messages.slice(0, -1).map((message) => ({
+        role: message.role === "user" ? "user" : "model",
+        parts: [{ text: message.content }],
+      })),
+    })
 
-    const lastMessage = messages[messages.length - 1].content;
-    const result = await chat.sendMessage(lastMessage);
-    
+    const lastMessage = messages[messages.length - 1].content
+    const result = await chat.sendMessage(lastMessage)
+
     return NextResponse.json({
-        content: result.response.text(),
-        role: 'assistant'
-    });
+      content: result.response.text(),
+      role: "assistant",
+    })
   } catch (error) {
-    console.error("Chat API Error:", error);
-    return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
+    console.error("Chat API Error:", error)
+    return NextResponse.json({ error: "Failed to generate response" }, { status: 500 })
   }
 }

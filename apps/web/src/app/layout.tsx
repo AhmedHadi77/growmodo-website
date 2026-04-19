@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AIAssistant } from "@/components/chat/ai-assistant";
 import { PrivacySettings } from "@/components/layout/privacy-settings";
+import { brand } from "@/lib/growmodo-content";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,8 +17,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Elevate | Premium AI Automation & Digital Agency",
-  description: "A world-class digital agency and AI automation platform building the future of web and software development.",
+  title: `${brand.name} | ${brand.shortTagline}`,
+  description: "Access AI-empowered designers, developers, video editors, and project managers through one managed talent membership.",
 };
 
 export default function RootLayout({
